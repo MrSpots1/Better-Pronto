@@ -36,9 +36,9 @@ def load_data_from_file(file_path):
             data = json.load(file)
         return data
     except FileNotFoundError:
-        return "File not found."
+        return {"error": "File not found."}
     except json.JSONDecodeError:
-        return "Error decoding JSON."
+        return {"error": "Error decoding JSON."}
 
 def load_and_search(file_path, target_key):
     """
@@ -56,12 +56,14 @@ def load_and_search(file_path, target_key):
             return value
         else:
             return f"Key '{target_key}' not found."
+    elif isinstance(data, dict) and "error" in data:
+        return data["error"]
     else:
-        return data
+        return "Invalid JSON structure."
 
 # Example usage
 if __name__ == "__main__":
-    file_path = r"C:\Users\paul\Desktop\Better Pronto\authToken_Response.txt"
+    file_path = r"C:\Users\paul\Desktop\Better Pronto\LoginToken_Response.json"
     key_to_search = "logintoken"
     result = load_and_search(file_path, key_to_search)
     print(result)
