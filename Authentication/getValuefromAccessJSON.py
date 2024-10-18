@@ -36,9 +36,9 @@ def load_data_from_file(file_path):
             data = json.load(file)
         return data
     except FileNotFoundError:
-        return "File not found."
+        return {"error": "File not found."}
     except json.JSONDecodeError:
-        return "Error decoding JSON."
+        return {"error": "Error decoding JSON."}
 
 def load_and_search(file_path, target_key):
     """
@@ -61,7 +61,7 @@ def load_and_search(file_path, target_key):
 
 # Example usage
 if __name__ == "__main__":
-    file_path = r"C:\Users\paul\Desktop\Better Pronto\authToken_Response.txt"
+    file_path = r"C:\Users\paul\Desktop\Better Pronto\authToken_Response.json"
     key_to_search = "accesstoken"
     result = load_and_search(file_path, key_to_search)
     print(result)
