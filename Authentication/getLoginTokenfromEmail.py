@@ -69,19 +69,9 @@ def main():
         end_time = time.time()
         total_time = end_time - start_time
         print(f"Time to get response: {total_time} seconds.")
-        save_response_to_file(result, r"C:\Users\paul\Desktop\Better Pronto\authToken_Response.txt")  # Save the response
+        save_response_to_file(result, r"C:\Users\paul\Desktop\Better Pronto\Authentication\getLoginToken\LoginToken_Response.json")  # Save the response
         if result.get("ok"):
             logger.info(f"User authenticated: {result}")
-            pronto_api_token = result.get('users', [{}])[0].get('login_token')
-            if pronto_api_token:
-                logger.info(f"Received login token: {pronto_api_token}")
-                try:
-                    with open(r"C:\Users\paul\Desktop\Better Pronto\login_token.txt", "w") as file:
-                        file.write(pronto_api_token)
-                except IOError as io_err:
-                    logger.error(f"File write error: {io_err}")
-            else:
-                logger.error("Login token not found in response")
         else:
             logger.error(f"Authentication failed: {result.get('error', 'Unknown error')}")
     except BackendError as e:
