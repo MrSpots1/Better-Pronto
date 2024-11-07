@@ -1,6 +1,7 @@
-import requests, time, json
-from dataclasses import dataclass, asdict
-from get_value_fromJSON import load_and_search
+import requests
+import time
+import json
+from dataclasses import dataclass
 
 @dataclass
 class DeviceInfo:
@@ -14,16 +15,44 @@ class BackendError(Exception):
 
 # Define the API base URL
 api_base_url = "https://stanfordohs.pronto.io/"
-endpoint = "api/v1/user.tokenlogin"  # Adjust this based on the API documentation
+endpoint = "api/v1/user.tokenlogin"
 
-file_path = r'C:\Users\paul\Desktop\Better Pronto\dictionary_response.txt'
-key_to_search = "logintoken"
+def search_key(data, target_key):
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if key == target_key:
+                return value
+            elif isinstance(value, dict):
+                result = search_key(value, target_key)
+                if result is not None:
+                    return result
+            elif isinstance(value, list):
+                for item in value:
+                    if isinstance(item, dict):
+                        result = search_key(item, target_key)
+                        if result is not None:
+                            return result
+    return None
 
-login_token = load_and_search(file_path, key_to_search)
-print(f"Logintoken result: {login_token}")
+def load_data_from_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        return str(e)
+
+def load_and_search(file_path, target_key):
+    data = load_data_from_file(file_path)
+    if isinstance(data, dict):
+        value = search_key(data, target_key)
+        return value if value is not None else f"Key '{target_key}' not found."
+    return data
+
+# Load the login token from the response file
+login_token = load_and_search(r"C:\Users\paul\Desktop\Better Pronto\Authentication\getLoginToken\LoginToken_Response.json", 'logintoken')
+print(f"Login Token: {login_token}")
 
 # Create the payload
-login_tokens = [f"{login_token}"] 
 device_info = {
     "browsername": "firefox",
     "browserversion": "130.0.0",
@@ -35,7 +64,7 @@ device_info = {
 }
 
 payload = {
-    "logintokens": login_tokens,
+    "logintokens": [login_token],
     "device": device_info,
 }
 
@@ -43,18 +72,17 @@ payload = {
 start_time = time.time()
 response = requests.post(f"{api_base_url}{endpoint}", json=payload)
 end_time = time.time()
-total_time = end_time - start_time
-print(f"Request sent in {total_time} seconds")
+print(f"Request sent in {end_time - start_time} seconds")
 
 # Check the response
 if response.status_code == 200:
-    print("Success:", response.json())
     response_data = response.json()
+    print("Success:", response_data)
 else:
-    print(f"Error: {response.status_code} - {response.text}")
     response_data = {"error": response.status_code, "message": response.text}
+    print(f"Error: {response.status_code} - {response.text}")
 
 # Save the response to a file in JSON format
-response_file_path = r'C:\Users\paul\Desktop\Better Pronto\authToken_Response.txt'
+response_file_path = r'C:\Users\paul\Desktop\Better Pronto\Authentication\getAccessToken\accessTokenResponse.json'
 with open(response_file_path, 'w') as file:
     json.dump(response_data, file, indent=4)
