@@ -3,8 +3,8 @@ import json
 from getValuefromAccessJSON import load_and_search
 
 
-def get_channel_list():
-    access_token = load_and_search(r"C:\Users\paul\Desktop\Better Pronto\authToken_Response.json", "accesstoken")
+def get_channel_list(bubble_id):
+    access_token = load_and_search(r"C:\Users\paul\Desktop\Better Pronto\Authentication\getAccessToken\accessTokenResponse.json", "accesstoken")
     url = "https://stanfordohs.pronto.io/api/v2/bubble.info"
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -22,7 +22,7 @@ def get_channel_list():
         "browserversion": "130.0.0",
         "osname": "Windows",
         "type": "WEB",
-        "bubble_id": {bubble_id},
+        "bubble_id": bubble_id,
     }
     
     response = requests.post(url, headers=headers, json=device_info)
@@ -45,5 +45,5 @@ def get_channel_list():
 
 # Example usage
 bubble_id = 3599212
-channels = get_channel_list()
+channels = get_channel_list(bubble_id)
 print(channels)
