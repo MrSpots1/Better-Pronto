@@ -152,39 +152,45 @@ if __name__ == "__main__":
 
     # Load the login token from the response file
     login_token = load_and_search(r"C:\Users\paul\Desktop\Better Pronto\Authentication\getTokens\JSON\LoginToken_Response.json", 'logintoken')
-    print(f"Login Token: {login_token}")
+    if isinstance(login_token, str):
+        print(f"Login Token: {login_token}")
 
-    # Create the payload
-    device_info = {
-        "browsername": "firefox",
-        "browserversion": "130.0.0",
-        "osname": "macOS",
-        "type": "WEB",
-        "uuid": "314c9314-d5e5-4ae4-84e2-9f2f3938ca28",
-        "osversion": "10.15.6",
-        "appversion": "1.0.0",
-    }
+        # Create the payload
+        device_info = {
+            "browsername": "firefox",
+            "browserversion": "130.0.0",
+            "osname": "macOS",
+            "type": "WEB",
+            "uuid": "314c9314-d5e5-4ae4-84e2-9f2f3938ca28",
+            "osversion": "10.15.6",
+            "appversion": "1.0.0",
+        }
 
-    payload = {
-        "logintokens": [login_token],
-        "device": device_info,
-    }
+        payload = {
+            "logintokens": [login_token],
+            "device": device_info,
+        }
 
-    # Send the POST request
-    start_time = time.time()
-    response = requests.post(f"{api_base_url}{endpoint}", json=payload)
-    end_time = time.time()
-    print(f"Request sent in {end_time - start_time} seconds")
+        # Send the POST request
+        start_time = time.time()
+        try:
+            response = requests.post(f"{api_base_url}{endpoint}", json=payload)
+            end_time = time.time()
+            print(f"Request sent in {end_time - start_time} seconds")
 
-    # Check the response
-    if response.status_code == 200:
-        response_data = response.json()
-        print("Success:", response_data)
+            # Check the response
+            if response.status_code == 200:
+                response_data = response.json()
+                print("Success:", response_data)
+            else:
+                response_data = {"error": response.status_code, "message": response.text}
+                print(f"Error: {response.status_code} - {response.text}")
+
+            # Save the response to a file in JSON format
+            response_file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\getTokens\JSON\accessTokenResponse.json"
+            with open(response_file_path, 'w') as file:
+                json.dump(response_data, file, indent=4)
+        except requests.exceptions.RequestException as req_err:
+            print(f"Request exception occurred: {req_err}")
     else:
-        response_data = {"error": response.status_code, "message": response.text}
-        print(f"Error: {response.status_code} - {response.text}")
-
-    # Save the response to a file in JSON format
-    response_file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\getTokens\JSON\accessTokenResponse.json"
-    with open(response_file_path, 'w') as file:
-        json.dump(response_data, file, indent=4)
+        print(f"Invalid login token: {login_token}")
