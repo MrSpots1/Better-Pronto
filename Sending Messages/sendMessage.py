@@ -13,6 +13,10 @@ access_token = load_and_search(file_path, "accesstoken")
 if not access_token:
     raise ValueError("Access token not found or invalid")
 
+userID = load_and_search(file_path, "id")
+if not userID:
+    raise ValueError("User ID not found or invalid")
+
 headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {access_token}",  # Ensure 'Bearer' is included
@@ -27,7 +31,7 @@ data = {
     "bubble_id": 3536226,
     "message": "testing",
     "created_at": created_message_at,
-    "user_id": 5302367,
+    "user_id": userID,
     "messagemedia": []
 }
 
