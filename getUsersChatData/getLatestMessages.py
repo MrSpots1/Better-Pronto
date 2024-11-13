@@ -2,8 +2,10 @@ import json
 import requests
 from getValuefromAccessJSON import load_and_search
 
-def get_latest_messages(file_path, bubble_id, output_file_path):
-    user_id = load_and_search(file_path, "id")
+def get_latest_messages(bubble_id):
+    file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\accessTokenResponse.json"
+    output_file_path = r"C:\Users\paul\Desktop\Better Pronto\getUsersChatData\json\latestMessages.json"
+    #user_id = load_and_search(file_path, "id")
     access_token = load_and_search(file_path, "accesstoken")
     
     if not access_token:
@@ -34,9 +36,5 @@ def get_latest_messages(file_path, bubble_id, output_file_path):
     except Exception as err:
         print(f"An unexpected error occurred: {err}")
 
-if __name__ == "__main__":
-    file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\accessTokenResponse.json"
-    bubble_id = 3536226
-    output_file_path = r"C:\Users\paul\Desktop\Better Pronto\getUsersChatData\json\latestMessages.json"
-    
-    get_latest_messages(file_path, bubble_id, output_file_path)
+bubble_id = 3536226
+get_latest_messages(bubble_id)
