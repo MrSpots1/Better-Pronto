@@ -36,5 +36,5 @@ def get_latest_messages(bubble_id):
     except Exception as err:
         print(f"An unexpected error occurred: {err}")
 
-bubble_id = 3536226
-get_latest_messages(bubble_id)
+
+get_latest_messages(3536226)
