@@ -83,7 +83,7 @@ def verification_code_to_accessToken(email):
         end_time = time.time()
         total_time = end_time - start_time
         print(f"Time to get response: {total_time} seconds.")
-        save_response_to_file(result, r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\LoginToken_Response.json")
+        save_response_to_file(result, r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\Authentication\accessTokenResponse.json")
         if result.get("ok"):
             logger.info(f"User authenticated: {result}")
         else:
@@ -127,7 +127,7 @@ def load_and_search(file_path, target_key):
 
 # Main execution starts here
 if __name__ == "__main__":
-    email = "paul257@ohs.stanford.edu"
+    email = "tayland@ohs.stanford.edu"
     try:
         print("Requesting verification code for", email)
         request_start_time = time.time()
@@ -147,7 +147,7 @@ if __name__ == "__main__":
     endpoint = "api/v1/user.tokenlogin"
 
     # Load the login token from the response file
-    login_token = load_and_search(r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\LoginToken_Response.json", 'logintoken')
+    login_token = load_and_search(r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\Authentication\accessTokenResponse.json", 'logintoken')
     print(f"Login Token: {login_token}")
 
     # Create the payload
@@ -180,6 +180,6 @@ if __name__ == "__main__":
         print(f"Error: {response.status_code} - {response.text}")
 
     # Save the response to a file in JSON format
-    response_file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\accessTokenResponse.json"
+    response_file_path = r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\Authentication\accessTokenResponse.json"
     with open(response_file_path, 'w') as file:
         json.dump(response_data, file, indent=4)
