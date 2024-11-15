@@ -4,7 +4,7 @@ import requests
 from getValuefromAccessJSON import load_and_search
 
 def get_channel_list(bubble_id, page_number):
-    access_token = load_and_search(r"C:\Users\paul\Desktop\Better Pronto\Authentication\getAccessToken\accessTokenResponse.json", "accesstoken")
+    access_token = load_and_search(r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\Authentication\accessTokenResponse.json", "accesstoken")
     url = "https://stanfordohs.pronto.io/api/v1/bubble.membershipsearch"
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -72,7 +72,7 @@ def append_to_json_file(data, filename):
 
 # Example usage
 pageNumber = 1
-bubble_id = 3640189
+bubble_id = 3930501 
 filename = 'bubbleSearchResponse.json'
 
 start_time = time.time()

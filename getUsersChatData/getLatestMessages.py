@@ -3,8 +3,8 @@ import requests
 from getValuefromAccessJSON import load_and_search
 
 def get_latest_messages(bubble_id):
-    file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\accessTokenResponse.json"
-    output_file_path = r"C:\Users\paul\Desktop\Better Pronto\getUsersChatData\json\latestMessages.json"
+    file_path = r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\Authentication\accessTokenResponse.json"
+    output_file_path = r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\getUsersChatData\latestMessages.json"
     #user_id = load_and_search(file_path, "id")
     access_token = load_and_search(file_path, "accesstoken")
     
@@ -37,4 +37,12 @@ def get_latest_messages(bubble_id):
         print(f"An unexpected error occurred: {err}")
 
 
-get_latest_messages(3536226)
+get_latest_messages(3835617 )
+def PrintMessages():
+    output_file_path = r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\getUsersChatData\latestMessages.json"
+    with open(output_file_path, 'r') as file:
+        data = json.load(file)
+    messages = data["messages"]
+    for i in range(50):
+        print(messages[49-i]["message"])
+PrintMessages()

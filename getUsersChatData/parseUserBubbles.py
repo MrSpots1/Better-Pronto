@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timezone
 
 # Sample JSON data
-with open(r"C:\Users\paul\Desktop\Better Pronto\getUsersChatData\json\listofBubbles.json", 'r') as file:
+with open(r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-maingetUsersChatData\json\listofBubbles.json", 'r') as file:
     data = json.load(file)
 
 def search_key(data, key):
