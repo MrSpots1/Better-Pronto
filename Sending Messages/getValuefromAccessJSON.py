@@ -18,7 +18,7 @@ def load_and_search(file_path, target_key):
 
 # Example usage
 if __name__ == "__main__":
-    file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\accessTokenResponse.json"
+    file_path = r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\Authentication\accessTokenResponse.json"
     key_to_search = "accesstoken"
     result = load_and_search(file_path, key_to_search)
     print(result)

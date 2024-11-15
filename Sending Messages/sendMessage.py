@@ -5,7 +5,7 @@ import uuid, random
 
 def send_message(message, bubble_id):
     url = "https://stanfordohs.pronto.io/api/v1/message.create"
-    file_path = r"C:\Users\paul\Desktop\Better Pronto\Authentication\JSON\accessTokenResponse.json"
+    file_path = r"C:\Users\tjder\Downloads\Better-Pronto-main\Better-Pronto-main\Authentication\accessTokenResponse.json"
 
     # Load the access token
     access_token = load_and_search(file_path, "accesstoken")
@@ -48,4 +48,5 @@ def send_message(message, bubble_id):
         print(f"An unexpected error occurred: {err}")
 
 # Example usage
-send_message("Hello, this is a test message", 3536226)
+
+send_message("I am sending this message from a python script", 3930501 )
