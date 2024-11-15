@@ -412,6 +412,10 @@ def PrintMessages():
         data = json.load(file)
     messages = data["messages"]
     for i in range(50):
+        print(messages[49-i]["user"]["firstname"])
+        print(" ")
+        print(messages[49-i]["user"]["lastname"])
+        print(": ")
         print(messages[49-i]["message"])
 
 def Select_Chat_and_get_messages():
